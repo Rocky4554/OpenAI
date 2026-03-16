@@ -1,0 +1,80 @@
+AI implementation in CRM
+
+1. Content/Template Improvement – Provide an “improve this text” button. The user writes a draft email or note, clicks AI assistance, and the system suggests edits for clarity and tone. Zoho calls this “smart prompt” (improve language). It’s just using an LLM to rewrite or refine text, no model training needed.
+
+2. AI‑Drafted Communication – Let the user click a button to generate or improve an email, SMS or chat message using context from the CRM. For example, the AI can draft follow‑up emails, meeting confirmations, or proposal messages
+
+3. Meeting/Call Summaries & Notes – After a sales call or meeting (or even from a salesperson’s quick voice memo), the AI can write a concise summary of the key points and next steps. We can use an LLM to parse notes or transcript snippets (from the user’s upload or a Whisper transcription) and output a bullet‑list summary.
+
+4. Smart Data Import Mapping – When importing CSVs, use AI to auto‑match column names to CRM fields. An LLM can read the header names and sample values to guess which field each should map to, reducing manual mapping. 
+
+5. Automated Follow-Up Reminders (Workflow Bot) – Without complex ML, we can script common rules: e.g. “If a lead hasn’t responded in 3 days, notify the owner”. Or “If deal is at stage ‘Proposal Sent’ for over 7 days, prompt the manager”. These are simple rule-based automations but AI can help users set them up via natural language.
+
+6. AI Lead Prioritization (Hot Lead Detection)
+The problem
+Sales teams often have hundreds of leads but don’t know which ones are most likely to convert.
+What AI does
+Your AI analyzes signals like: recent activity, response history, deal size, company profile, communication patterns
+
+
+Then it highlights which leads should be contacted first.
+
+7. AI Next-Step Suggestions
+What AI does
+Based on the deal stage and communication history, AI suggests actions such as:
+send pricing email
+
+
+schedule demo
+
+
+follow up after meeting
+
+
+involve manager
+
+8. AI Deal Risk Detection
+The problem
+Managers often realize too late that deals are failing.
+What AI does
+AI identifies warning signs such as:
+long inactivity
+
+
+no decision-maker involved
+
+
+declining communication
+
+9. AI Sales Performance Insights
+What AI does
+AI analyzes patterns across deals and identifies trends.
+Example insights
+“Deals with demos convert 40% more often.”
+
+
+“Leads from LinkedIn close twice as fast.”
+
+
+“Average deal cycle increased by 8 days this quarter.”
+
+10. AI Data Cleanup
+The problem
+CRM data becomes messy over time.
+What AI does
+AI detects:
+duplicate contacts
+
+
+incomplete records
+
+
+outdated information
+
+
+
+
+
+
+
+
