@@ -25,7 +25,7 @@ function VoiceAgentCTA() {
               Go live in minutes. Handle thousands of calls in English and Hindi — with full CRM integration, real-time transcription, and intelligent escalation built in.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/book-demo" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] transition-all">
+              <a href="/#contact" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] transition-all">
                 Book a Demo
               </a>
               <Button size="lg" variant="outline" className="border-orange-500/30 hover:border-orange-500/60">

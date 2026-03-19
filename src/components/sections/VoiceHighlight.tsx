@@ -75,7 +75,7 @@ export function VoiceHighlight() {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <a href="/book-demo" className="px-6 py-3 rounded-full bg-indigo-500 hover:bg-indigo-500/90 text-white font-semibold text-sm shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all duration-300">
+            <a href="/#contact" className="px-6 py-3 rounded-full bg-indigo-500 hover:bg-indigo-500/90 text-white font-semibold text-sm shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all duration-300">
               Start Free Trial
             </a>
           </motion.div>

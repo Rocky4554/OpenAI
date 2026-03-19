@@ -18,7 +18,7 @@ export function Footer() {
             <p className="text-sm text-muted-foreground max-w-xs mb-6">
               The intelligence layer that connects to your existing CRM and ERP tools to add automation, insights, and voice agents.
             </p>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <a href="#" className="text-muted-foreground hover:text-white transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
@@ -28,7 +28,7 @@ export function Footer() {
               <a href="#" className="text-muted-foreground hover:text-white transition-colors">
                 <Github className="w-5 h-5" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex gap-8 mx-auto">

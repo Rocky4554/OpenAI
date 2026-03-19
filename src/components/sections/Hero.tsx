@@ -46,7 +46,7 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
           >
             <a
-              href="/book-demo"
+              href="/#contact"
               className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300 text-center">
               Book a Demo
             </a>

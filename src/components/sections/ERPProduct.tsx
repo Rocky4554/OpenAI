@@ -32,7 +32,7 @@ export function ERPProduct() {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
               No migration required. OpenBusiness.ai connects to your existing ERP and adds AI-powered operational insights, workflow automation, and decision support — right on top of the system you already run.
             </p>
-            <a href="/book-demo" className="group inline-flex items-center justify-center px-6 py-3 rounded-full bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm transition-all">
+            <a href="/#contact" className="group inline-flex items-center justify-center px-6 py-3 rounded-full bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm transition-all">
               Schedule a Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>

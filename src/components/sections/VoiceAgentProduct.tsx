@@ -41,7 +41,7 @@ export function VoiceAgentProduct() {
               Currently supporting <span className="font-semibold text-white">English & Hindi</span> — more languages coming soon
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="/book-demo" className="group inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] hover:shadow-[0_0_36px_rgba(249,115,22,0.6)] transition-all">
+              <a href="/#contact" className="group inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-400 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] hover:shadow-[0_0_36px_rgba(249,115,22,0.6)] transition-all">
                 Book a Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-orange-500/30 hover:border-orange-500/60">

@@ -25,7 +25,7 @@ function ERPCTA() {
               Operate your business with intelligence. Reduce operational complexity, identify inefficiencies, and automate workflows — all without replacing your ERP.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/book-demo" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm transition-all">
+              <a href="/#contact" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm transition-all">
                 Schedule a Demo
               </a>
               <Button size="lg" variant="outline" className="border-teal-500/30 hover:border-teal-500/60">

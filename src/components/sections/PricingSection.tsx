@@ -123,13 +123,13 @@ function PricingCard({ plan, index }: { plan: Plan; index: number }) {
       initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.13, duration: 0.55, ease: "easeOut" }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => { setHovered(false); mouseX.set(0); mouseY.set(0); }}
       onMouseDown={() => setClicked(true)}
       onMouseUp={() => setClicked(false)}
       animate={{
+        opacity: 1,
         y: clicked ? 2 : hovered ? -6 : 0,
         scale: clicked ? 0.98 : hovered ? 1.02 : 1,
         borderColor: isActive ? "rgba(249,115,22,0.55)" : "rgba(255,255,255,0.08)",
@@ -139,7 +139,7 @@ function PricingCard({ plan, index }: { plan: Plan; index: number }) {
           ? "0 0 30px rgba(249,115,22,0.25), 0 0 60px rgba(249,115,22,0.10), 0 20px 60px rgba(0,0,0,0.6)"
           : "0 8px 32px rgba(0,0,0,0.4)",
       }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ delay: index * 0.13, duration: 0.25, ease: "easeOut" }}
       className="relative flex flex-col rounded-2xl border bg-[#111218] p-6 overflow-hidden cursor-pointer select-none"
       style={{ borderColor: "rgba(255,255,255,0.08)" }}
     >
