@@ -1,7 +1,11 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import 'dotenv/config';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 app.use(cors());
@@ -64,5 +68,14 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// Serve static frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.resolve(__dirname, '../dist/public');
+  app.use(express.static(staticPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'));
+  });
+}
+
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

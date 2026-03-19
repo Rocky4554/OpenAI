@@ -6,9 +6,7 @@ import { Features } from "@/components/sections/Features";
 import { VoiceHighlight } from "@/components/sections/VoiceHighlight";
 import { Benefits } from "@/components/sections/Benefits";
 import { Industries } from "@/components/sections/Industries";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { GetInTouch } from "@/components/sections/GetInTouch";
-import { Cta } from "@/components/sections/Cta";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
@@ -23,9 +21,7 @@ export default function Home() {
 <VoiceHighlight />
         <Benefits />
         <Industries />
-        <Testimonials />
         <GetInTouch />
-        <Cta />
       </main>
       <Footer />
     </div>

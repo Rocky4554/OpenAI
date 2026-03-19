@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Database, Workflow, PhoneCall, LayoutDashboard, C
 
 export function Hero() {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center pt-16 pb-12 overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-center justify-center pt-28 pb-12 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.2]" />
       <div className="absolute inset-0 z-0">
@@ -21,16 +21,6 @@ export function Hero() {
         
         {/* Text Content */}
         <div className="flex-1 text-center lg:text-left mt-10 lg:mt-0">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>AI Intelligence Layer for Modern Business</span>
-          </motion.div>
-          
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -55,12 +45,10 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
           >
-            <button className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300">
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] transition-all duration-300">
               Book a Demo
-            </button>
-            <button className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 font-semibold text-base backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-300 group">
-              See How It Works
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
           
