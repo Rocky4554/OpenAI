@@ -184,7 +184,7 @@ export function GetInTouch() {
                     <button
                       type="submit"
                       disabled={status === "loading"}
-                      className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm shadow-[0_0_24px_rgba(59,130,246,0.4)] hover:shadow-[0_0_36px_rgba(59,130,246,0.6)] transition-all duration-300 group"
+                      className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#f97316] hover:bg-[#ea6c0a] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] hover:shadow-[0_0_36px_rgba(249,115,22,0.6)] transition-all duration-300 group"
                     >
                       {status === "loading" ? (
                         <>
