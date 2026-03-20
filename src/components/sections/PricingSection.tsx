@@ -216,17 +216,11 @@ function PricingCard({ plan, index }: { plan: Plan; index: number }) {
         <motion.button
           whileTap={{ scale: 0.96 }}
           animate={{
-            backgroundColor: isActive
-              ? "#f97316"
-              : plan.ctaStyle === "primary"
-              ? "#f97316"
-              : "transparent",
-            borderColor: isActive ? "#f97316" : "rgba(255,255,255,0.2)",
+            backgroundColor: "#f97316",
+            borderColor: "#f97316",
             boxShadow: isActive
               ? "0 0 20px rgba(249,115,22,0.45), 0 4px 15px rgba(249,115,22,0.3)"
-              : plan.ctaStyle === "primary"
-              ? "0 4px 15px rgba(249,115,22,0.25)"
-              : "none",
+              : "0 4px 15px rgba(249,115,22,0.25)",
             color: "#ffffff",
           }}
           transition={{ duration: 0.22 }}
