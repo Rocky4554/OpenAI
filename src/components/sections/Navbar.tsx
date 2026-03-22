@@ -21,8 +21,7 @@ export function Navbar() {
   const navLinks = [
     { name: "How It Works", href: "/#how-it-works", isAnchor: true },
     { name: "Use Cases", href: "/#use-cases", isAnchor: true },
-    { name: "Voice Agent", href: "/voice-agent", isAnchor: false },
-    { name: "Pricing", href: "/pricing", isAnchor: false },
+    { name: "Voice Agent", href: "/voice", isAnchor: false },
   ];
 
   const isActive = (path: string) => location === path;

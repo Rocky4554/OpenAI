@@ -37,38 +37,6 @@ export function Footer() {
   return (
     <footer className="bg-[#050811] border-t border-white/[0.05] pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-10 mb-16">
-
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="font-bold text-lg tracking-tight text-white">
-                OpenBusiness<span className="text-primary">.ai</span>
-              </span>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-xs mb-2">
-              An AI workforce that operates across your entire business stack — it doesn't just tell you what's wrong, it fixes it.
-            </p>
-            <p className="text-xs text-primary font-medium">Your AI. Your CRM. No Migration.</p>
-          </div>
-
-          <div className="flex gap-8 mx-auto">
-            {[
-              { label: "How It Works", href: "/#how-it-works" },
-              { label: "Use Cases", href: "/#use-cases" },
-              { label: "Voice Agent", href: "/voice-agent" },
-              { label: "Pricing", href: "/pricing" },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm font-semibold text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105 hover:tracking-wide"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-        </div>
 
         {/* LLM Summary Links */}
         <div className="mb-8 flex flex-col items-center gap-4">

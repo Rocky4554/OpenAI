@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/Home";
 import VoiceAgentPage from "@/pages/VoiceAgentPage";
-import PricingPage from "@/pages/PricingPage";
 import BookDemoPage from "@/pages/BookDemoPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import TermsOfServicePage from "@/pages/TermsOfServicePage";
@@ -23,8 +22,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/voice-agent" component={VoiceAgentPage} />
-      <Route path="/pricing" component={PricingPage} />
+      <Route path="/voice" component={VoiceAgentPage} />
       <Route path="/book-demo" component={BookDemoPage} />
       <Route path="/privacy-policy" component={PrivacyPolicyPage} />
       <Route path="/terms-of-service" component={TermsOfServicePage} />
