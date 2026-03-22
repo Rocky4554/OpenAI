@@ -1,11 +1,13 @@
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MockWindow } from "@/components/ui/mock-window";
 import {
   Mic, Phone, PhoneCall, PhoneIncoming, Headphones,
   Globe2, ArrowRight, BarChart3, Clock, CheckCircle2,
   MessageSquare, Calendar, Package, Users,
-  Brain, Zap, TrendingUp, Volume2
+  Brain, Zap, TrendingUp, Volume2, Pause, Play,
+  SkipBack, SkipForward, X, Volume1, VolumeX
 } from "lucide-react";
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } } };
@@ -14,7 +16,75 @@ const fadeRight = { hidden: { opacity: 0, x: 24 }, visible: { opacity: 1, x: 0, 
 
 const waveHeights = [4, 8, 12, 18, 24, 16, 10, 22, 14, 8, 18, 26, 12, 6, 20, 28, 10, 16, 8, 24, 14, 20, 6, 18, 12, 22, 8, 16, 28, 10];
 
+function formatTime(s: number) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+}
+
 export function VoiceAgentProduct() {
+  const [playerOpen, setPlayerOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.8);
+  const [muted, setMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const audio = new Audio("/sample-call.aac");
+    audioRef.current = audio;
+    audio.volume = volume;
+    audio.addEventListener("loadedmetadata", () => setDuration(audio.duration));
+    audio.addEventListener("timeupdate", () => setCurrentTime(audio.currentTime));
+    audio.addEventListener("ended", () => setIsPlaying(false));
+    return () => { audio.pause(); audio.src = ""; };
+  }, []);
+
+  const togglePlay = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (!playerOpen) setPlayerOpen(true);
+    if (isPlaying) { audio.pause(); setIsPlaying(false); }
+    else { audio.play(); setIsPlaying(true); }
+  }, [isPlaying, playerOpen]);
+
+  const skip = (secs: number) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + secs));
+  };
+
+  const seekTo = (e: React.MouseEvent<HTMLDivElement>) => {
+    const audio = audioRef.current;
+    const bar = progressRef.current;
+    if (!audio || !bar) return;
+    const rect = bar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = pct * audio.duration;
+  };
+
+  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = parseFloat(e.target.value);
+    setVolume(v);
+    setMuted(v === 0);
+    if (audioRef.current) audioRef.current.volume = v;
+  };
+
+  const toggleMute = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (muted) { audio.volume = volume || 0.8; setMuted(false); if (!volume) setVolume(0.8); }
+    else { audio.volume = 0; setMuted(true); }
+  };
+
+  const closePlayer = () => {
+    audioRef.current?.pause();
+    setIsPlaying(false);
+    setPlayerOpen(false);
+  };
+
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-40 pointer-events-none mix-blend-screen">
@@ -45,17 +115,111 @@ export function VoiceAgentProduct() {
                 Book a Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <button
-                id="hear-sample-call-btn"
+                onClick={togglePlay}
                 className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] hover:shadow-[0_0_36px_rgba(249,115,22,0.6)] transition-all"
               >
-                <Phone className="w-4 h-4 group-hover:animate-bounce" />
-                Hear a Sample Call
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500" />
-                </span>
+                {isPlaying ? <Pause className="w-4 h-4" /> : <Phone className="w-4 h-4 group-hover:animate-bounce" />}
+                {isPlaying ? "Pause Sample Call" : "Hear a Sample Call"}
+                {!isPlaying && !playerOpen && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500" />
+                  </span>
+                )}
               </button>
             </div>
+
+            {/* ── Inline Audio Player ── */}
+            <AnimatePresence>
+              {playerOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.25 }}
+                  className="mt-8 mx-auto max-w-md w-full"
+                >
+                  <div className="relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 p-5 shadow-2xl shadow-orange-500/5">
+                    {/* Close button */}
+                    <button onClick={closePlayer} className="absolute top-3 right-3 text-white/30 hover:text-white/70 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+
+                    {/* Label */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                        <Phone className="w-3.5 h-3.5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-white">Sample Call — ABC Motors</div>
+                        <div className="text-[11px] text-muted-foreground">AI Agent → Rahul Sharma · Hindi</div>
+                      </div>
+                    </div>
+
+                    {/* Progress bar */}
+                    <div className="mb-3">
+                      <div
+                        ref={progressRef}
+                        onClick={seekTo}
+                        className="group relative w-full h-1.5 bg-white/10 rounded-full cursor-pointer hover:h-2 transition-all"
+                      >
+                        <div
+                          className="absolute inset-y-0 left-0 bg-gradient-to-r from-orange-500 to-amber-400 rounded-full"
+                          style={{ width: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
+                        />
+                        <div
+                          className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ left: duration ? `calc(${(currentTime / duration) * 100}% - 7px)` : "0" }}
+                        />
+                      </div>
+                      <div className="flex justify-between mt-1.5">
+                        <span className="text-[10px] font-mono text-muted-foreground">{formatTime(currentTime)}</span>
+                        <span className="text-[10px] font-mono text-muted-foreground">{formatTime(duration)}</span>
+                      </div>
+                    </div>
+
+                    {/* Controls */}
+                    <div className="flex items-center justify-between">
+                      {/* Volume */}
+                      <div className="flex items-center gap-1.5 w-24">
+                        <button onClick={toggleMute} className="text-white/50 hover:text-white transition-colors">
+                          {muted ? <VolumeX className="w-4 h-4" /> : <Volume1 className="w-4 h-4" />}
+                        </button>
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.01"
+                          value={muted ? 0 : volume}
+                          onChange={changeVolume}
+                          className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                        />
+                      </div>
+
+                      {/* Play controls */}
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => skip(-10)} className="text-white/50 hover:text-white transition-colors" title="Back 10s">
+                          <SkipBack className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={togglePlay}
+                          className="w-11 h-11 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/30 transition-all hover:scale-105"
+                        >
+                          {isPlaying ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white ml-0.5" />}
+                        </button>
+                        <button onClick={() => skip(10)} className="text-white/50 hover:text-white transition-colors" title="Forward 10s">
+                          <SkipForward className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      {/* Spacer to balance volume */}
+                      <div className="w-24" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
           </motion.div>
         </div>
 
