@@ -38,15 +38,23 @@ export function VoiceAgentProduct() {
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-muted-foreground mb-8">
               <Globe2 className="w-4 h-4 text-orange-400" />
-              Currently supporting <span className="font-semibold text-white">English & Hindi</span> — more languages coming soon
+              Supporting <span className="font-semibold text-white">70+ languages</span> including English, Hindi, Spanish, French & more
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="/#contact" className="group inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-full bg-primary hover:bg-blue-600 text-white font-semibold text-sm shadow-[0_0_24px_rgba(59,130,246,0.4)] hover:shadow-[0_0_36px_rgba(59,130,246,0.6)] transition-all">
                 Book a Demo <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-orange-500/30 hover:border-orange-500/60">
+              <button
+                id="hear-sample-call-btn"
+                className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold text-sm shadow-[0_0_24px_rgba(249,115,22,0.4)] hover:shadow-[0_0_36px_rgba(249,115,22,0.6)] transition-all"
+              >
+                <Phone className="w-4 h-4 group-hover:animate-bounce" />
                 Hear a Sample Call
-              </Button>
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500" />
+                </span>
+              </button>
             </div>
           </motion.div>
         </div>
@@ -90,7 +98,7 @@ export function VoiceAgentProduct() {
               </div>
               <div className="mt-4 space-y-2">
                 <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Intent Detected</div>
-                <span className="inline-block px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium border border-orange-500/20">Order Tracking</span>
+                <span className="inline-block px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium border border-orange-500/20">Service Booking</span>
               </div>
             </div>
 
@@ -104,9 +112,13 @@ export function VoiceAgentProduct() {
               </div>
               <div className="space-y-4 mb-6">
                 {[
-                  { speaker: "Customer", text: "Mera order abhi tak nahi aaya... order number hai #4521", lang: "Hindi", time: "0:12" },
-                  { speaker: "Agent", text: "Namaste! Aapka order check kar raha hoon. Order #4521 — aapki delivery kal tak expected hai.", lang: "Hindi", time: "0:18" },
-                  { speaker: "Customer", text: "Theek hai, bahut shukriya.", lang: "Hindi", time: "0:24" },
+                  { speaker: "Agent", text: "Hello, kya main Rahul ji se baat kar raha hoon?", lang: "Hindi", time: "0:02" },
+                  { speaker: "Customer", text: "Haan ji, Rahul bol raha hoon. Kaun bol raha hai?", lang: "Hindi", time: "0:05" },
+                  { speaker: "Agent", text: "Ji namaste, main Ishan, ABC Motors se bol raha hoon. Aapki Maruti Swift ke service ke baare mein call kar raha hoon.", lang: "Hindi", time: "0:10" },
+                  { speaker: "Customer", text: "Haan ji, pichle kuch mahino se AC theek se cooling nahi kar raha, aur mileage bhi down ho gayi hai.", lang: "Hindi", time: "0:22" },
+                  { speaker: "Agent", text: "Samajh sakta hoon Sharma ji. Humare yahan sirf genuine Maruti parts lagte hain with warranty, aur pickup-drop bhi complimentary hai.", lang: "Hindi", time: "0:30" },
+                  { speaker: "Customer", text: "Achcha, yeh toh achchi baat hai. Kal ka slot ho sakta hai?", lang: "Hindi", time: "0:38" },
+                  { speaker: "Agent", text: "Bilkul, kal subah 10 baje pickup team aapke ghar aa jaayegi. Confirmation message bhej dunga.", lang: "Hindi", time: "0:44" },
                 ].map((msg, i) => (
                   <div key={i} className={`flex gap-3 ${msg.speaker === "Agent" ? "flex-row-reverse text-right" : ""}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${msg.speaker === "Agent" ? "bg-orange-500/20 text-orange-400" : "bg-white/10 text-white/60"}`}>
@@ -132,12 +144,12 @@ export function VoiceAgentProduct() {
                   <span className="text-xs font-semibold text-orange-400">AI Summary</span>
                 </div>
                 <ul className="space-y-1.5 text-xs text-white/70">
-                  <li>Customer called about delayed order #4521</li>
-                  <li>Agent confirmed delivery expected tomorrow</li>
-                  <li>Customer satisfied — no escalation needed</li>
+                  <li>Outbound call for periodic service follow-up — Maruti Swift</li>
+                  <li>Customer reported AC cooling issue & mileage drop</li>
+                  <li>Service booked — pickup scheduled tomorrow 10 AM</li>
                 </ul>
                 <div className="flex items-center gap-1.5 mt-3 text-xs text-green-400">
-                  <ArrowRight className="w-3 h-3" /> No action required
+                  <ArrowRight className="w-3 h-3" /> Pickup team dispatched for tomorrow
                 </div>
               </div>
 
@@ -145,7 +157,7 @@ export function VoiceAgentProduct() {
               <div className="flex flex-wrap gap-4 mt-5">
                 <div className="flex-1 min-w-[140px] p-3 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-[10px] text-muted-foreground mb-1">Sentiment</div>
-                  <div className="text-sm font-medium text-white">Satisfied</div>
+                  <div className="text-sm font-medium text-white">Convinced</div>
                 </div>
                 <div className="flex-1 min-w-[140px] p-3 rounded-xl bg-white/[0.03] border border-white/5">
                   <div className="text-[10px] text-muted-foreground mb-1">CRM Updated</div>
@@ -211,7 +223,7 @@ export function VoiceAgentProduct() {
                 <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Recent Calls</div>
                 <div className="space-y-2">
                   {[
-                    { name: "Rahul Sharma", lang: "Hindi", topic: "Order tracking", dur: "3:12", status: "Resolved", sc: "text-green-400", sbc: "bg-green-500/10 border-green-500/20" },
+                    { name: "Rahul Sharma", lang: "Hindi", topic: "Service booking", dur: "3:42", status: "Booked", sc: "text-green-400", sbc: "bg-green-500/10 border-green-500/20" },
                     { name: "Sarah Johnson", lang: "English", topic: "Product inquiry", dur: "1:48", status: "Resolved", sc: "text-green-400", sbc: "bg-green-500/10 border-green-500/20" },
                     { name: "Amit Kumar", lang: "Hindi", topic: "Complaint", dur: "4:05", status: "Escalated", sc: "text-orange-400", sbc: "bg-orange-500/10 border-orange-500/20" },
                     { name: "David Chen", lang: "English", topic: "Appointment booking", dur: "2:31", status: "Resolved", sc: "text-green-400", sbc: "bg-green-500/10 border-green-500/20" },
@@ -344,10 +356,10 @@ export function VoiceAgentProduct() {
                   <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-sm font-bold text-orange-400">R</div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-white">Rahul Sharma</p>
-                    <p className="text-xs text-muted-foreground">Call ended · 3 min 12 sec · Hindi</p>
+                    <p className="text-xs text-muted-foreground">Call ended · 3 min 42 sec · Hindi</p>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-green-400">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Resolved
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Booked
                   </div>
                 </div>
 
@@ -358,12 +370,13 @@ export function VoiceAgentProduct() {
                     <span className="text-xs font-semibold text-orange-400">AI Summary</span>
                   </div>
                   <ul className="space-y-1.5 text-xs text-white/70">
-                    <li>• Customer called about delayed order #4521</li>
-                    <li>• Agent confirmed delivery expected tomorrow</li>
-                    <li>• Customer satisfied — no escalation needed</li>
+                    <li>• Outbound service follow-up for Maruti Swift (ending 1234)</li>
+                    <li>• Customer reported AC cooling & mileage drop issues</li>
+                    <li>• Convinced customer with genuine parts + free pickup-drop</li>
+                    <li>• Service booked — pickup tomorrow 10 AM</li>
                   </ul>
                   <div className="flex items-center gap-1.5 mt-3 text-xs text-green-400">
-                    <ArrowRight className="w-3 h-3" /> No action required
+                    <ArrowRight className="w-3 h-3" /> Pickup team scheduled · Confirmation SMS sent
                   </div>
                 </div>
 
@@ -371,7 +384,7 @@ export function VoiceAgentProduct() {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
                     <div className="text-[10px] text-muted-foreground mb-1">Sentiment</div>
-                    <div className="text-sm font-medium text-white">Satisfied</div>
+                    <div className="text-sm font-medium text-white">Convinced</div>
                   </div>
                   <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
                     <div className="text-[10px] text-muted-foreground mb-1">CRM Updated</div>
@@ -386,9 +399,10 @@ export function VoiceAgentProduct() {
                 <div className="rounded-xl bg-white/[0.02] border border-white/5 p-4">
                   <div className="text-[10px] text-muted-foreground mb-2">Full Transcript Snippet</div>
                   <div className="space-y-2 text-xs">
-                    <p><span className="font-semibold text-white">Customer:</span> <span className="text-white/60">Mera order abhi tak nahi aaya...</span></p>
-                    <p><span className="font-semibold text-orange-400">Agent:</span> <span className="text-white/60">Namaste! Aapka order check kar raha hoon...</span></p>
-                    <p><span className="font-semibold text-white">Customer:</span> <span className="text-white/60">Theek hai, bahut shukriya.</span></p>
+                    <p><span className="font-semibold text-orange-400">Agent:</span> <span className="text-white/60">Aapki Swift kaise perform kar rahi hai? Koi problem toh nahi?</span></p>
+                    <p><span className="font-semibold text-white">Customer:</span> <span className="text-white/60">AC theek se cooling nahi kar raha, mileage bhi down...</span></p>
+                    <p><span className="font-semibold text-orange-400">Agent:</span> <span className="text-white/60">Genuine Maruti parts with warranty, pickup-drop complimentary hai.</span></p>
+                    <p><span className="font-semibold text-white">Customer:</span> <span className="text-white/60">Achcha, kal ka slot ho sakta hai?</span></p>
                   </div>
                 </div>
               </div>
@@ -403,17 +417,17 @@ export function VoiceAgentProduct() {
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Globe2 className="w-6 h-6 text-orange-400" />
-              <h2 className="text-3xl md:text-4xl font-bold">Bilingual from Day One</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">70+ Languages Supported</h2>
             </div>
             <p className="text-muted-foreground max-w-lg mx-auto text-sm">
-              Our Voice Agents are natively fluent in English and Hindi — understanding accents, regional phrases, and natural speech patterns. Multi-language expansion is already on the roadmap.
+              Our Voice Agents support over 70 languages — understanding accents, regional phrases, and natural speech patterns across the globe.
             </p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {[
-              { lang: "English", flags: "🇺🇸 🇬🇧", status: "Live", statusColor: "text-green-400 bg-green-500/10 border-green-500/20", sub: "Full support — US, UK accents" },
+              { lang: "English", flags: "🇺🇸 🇬🇧", status: "Live", statusColor: "text-green-400 bg-green-500/10 border-green-500/20", sub: "Full support — US, UK, AU accents" },
               { lang: "Hindi", flags: "🇮🇳", status: "Live", statusColor: "text-green-400 bg-green-500/10 border-green-500/20", sub: "Full support — multiple regional accents" },
-              { lang: "More Languages", flags: "🌍", status: "Coming Soon", statusColor: "text-orange-400 bg-orange-500/10 border-orange-500/20", sub: "Expanding to additional languages" },
+              { lang: "70+ Languages", flags: "🌍", status: "Live", statusColor: "text-green-400 bg-green-500/10 border-green-500/20", sub: "Spanish, French, Arabic, Mandarin & more" },
             ].map((item, i) => (
               <div key={i} className="text-center p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-orange-500/20 transition-colors">
                 <div className="text-3xl mb-3">{item.flags}</div>
