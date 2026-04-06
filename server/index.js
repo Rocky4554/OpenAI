@@ -4,6 +4,12 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,7 +28,7 @@ const transporter = nodemailer.createTransport({
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.post('/api/contact', async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, company, companySize, tools, message } = req.body;
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return res.status(400).json({ error: 'All fields are required.' });
@@ -32,14 +38,18 @@ app.post('/api/contact', async (req, res) => {
     // Notify you with the submission
     await transporter.sendMail({
       from: `"OpenBusiness.ai" <${process.env.SMTP_EMAIL}>`,
-      to: process.env.RECEIVER_EMAIL,
+      replyTo: `"OpenBusiness.ai" <${process.env.RECEIVER_EMAIL}>`,
+      to: [process.env.RECEIVER_EMAIL, process.env.RECEIVER_EMAIL_BACKUP].filter(Boolean).join(', '),
       subject: `New Contact from ${name} — OpenBusiness.ai`,
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
           <h2 style="color:#3B82F6;">New Contact Form Submission</h2>
           <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="padding:8px 0;font-weight:600;width:80px;">Name:</td><td>${name}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:600;width:120px;">Name:</td><td>${name}</td></tr>
             <tr><td style="padding:8px 0;font-weight:600;">Email:</td><td><a href="mailto:${email}">${email}</a></td></tr>
+            <tr><td style="padding:8px 0;font-weight:600;">Company:</td><td>${company || '—'}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:600;">Company Size:</td><td>${companySize || '—'}</td></tr>
+            <tr><td style="padding:8px 0;font-weight:600;">Tools Used:</td><td>${tools || '—'}</td></tr>
           </table>
           <h3 style="margin-top:20px;">Message:</h3>
           <p style="background:#f5f5f5;padding:16px;border-radius:8px;white-space:pre-wrap;">${message}</p>
@@ -47,25 +57,42 @@ app.post('/api/contact', async (req, res) => {
       `,
     });
 
-    // Auto-reply to the user
-    await transporter.sendMail({
-      from: `"OpenBusiness.ai" <${process.env.SMTP_EMAIL}>`,
-      to: email,
-      subject: "We've received your message — OpenBusiness.ai",
-      html: `
-        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
-          <h2 style="color:#3B82F6;">Thanks for reaching out, ${name}!</h2>
-          <p>We've received your message and our team will get back to you shortly.</p>
-          <p style="color:#666;">In the meantime, feel free to explore what OpenBusiness.ai can do for your business.</p>
-          <br/>
-          <p>Best regards,<br/><strong>The OpenBusiness.ai Team</strong></p>
-        </div>
-      `,
-    });
+    // Auto-reply to the user (temporarily disabled)
+    // await transporter.sendMail({
+    //   from: `"OpenBusiness.ai" <${process.env.SMTP_EMAIL}>`,
+    //   replyTo: `"OpenBusiness.ai Team" <${process.env.RECEIVER_EMAIL}>`,
+    //   to: email,
+    //   subject: "We've received your message — OpenBusiness.ai",
+    //   html: `
+    //     <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
+    //       <h2 style="color:#3B82F6;">Thanks for reaching out, ${name}!</h2>
+    //       <p>We've received your message and our team will get back to you within 24 hours to schedule your 48-hour scan.</p>
+    //       <p style="color:#666;">In the meantime, feel free to explore what OpenBusiness.ai can do for your business.</p>
+    //       <br/>
+    //       <p>Best regards,<br/><strong>The OpenBusiness.ai Team</strong></p>
+    //     </div>
+    //   `,
+    // });
+
+    // Save lead to Supabase (openbusiness schema)
+    const { error: dbError } = await supabase
+      .from('openbusiness_leads')
+      .insert({
+        name: name.trim(),
+        email: email.trim(),
+        company: company?.trim() || null,
+        company_size: companySize || null,
+        tools: tools?.trim() || null,
+        message: message.trim(),
+      });
+
+    if (dbError) {
+      console.error('Supabase insert error:', dbError.message);
+    }
 
     res.json({ success: true });
   } catch (err) {
-    console.error('Email error:', err);
+    console.error('Contact error:', err);
     res.status(500).json({ error: 'Failed to send email. Please try again.' });
   }
 });
@@ -82,7 +109,8 @@ app.post('/api/demo', async (req, res) => {
   try {
     await transporter.sendMail({
       from: `"OpenBusiness.ai" <${process.env.SMTP_EMAIL}>`,
-      to: process.env.RECEIVER_EMAIL,
+      replyTo: `"OpenBusiness.ai" <${process.env.RECEIVER_EMAIL}>`,
+      to: [process.env.RECEIVER_EMAIL, process.env.RECEIVER_EMAIL_BACKUP].filter(Boolean).join(', '),
       subject: `New Demo Request from ${name} — OpenBusiness.ai`,
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
@@ -100,6 +128,7 @@ app.post('/api/demo', async (req, res) => {
 
     await transporter.sendMail({
       from: `"OpenBusiness.ai" <${process.env.SMTP_EMAIL}>`,
+      replyTo: `"OpenBusiness.ai Team" <${process.env.RECEIVER_EMAIL}>`,
       to: email,
       subject: "Your demo request is confirmed — OpenBusiness.ai",
       html: `
