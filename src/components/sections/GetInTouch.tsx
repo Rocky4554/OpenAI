@@ -38,6 +38,20 @@ export function GetInTouch() {
 
       setStatus("success");
       setForm({ name: "", email: "", company: "", companySize: "", tools: "", message: "" });
+
+      // Confetti celebration
+      const fire = (particleRatio: number, opts: object) => {
+        (window as any).confetti({
+          origin: { y: 0.7 },
+          ...opts,
+          particleCount: Math.floor(200 * particleRatio),
+        });
+      };
+      fire(0.25, { spread: 26, startVelocity: 55, colors: ["#3B82F6", "#8B5CF6"] });
+      fire(0.2,  { spread: 60, colors: ["#3B82F6", "#ffffff"] });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ["#8B5CF6", "#3B82F6"] });
+      fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1,  { spread: 120, startVelocity: 45 });
     } catch (err: unknown) {
       setStatus("error");
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
@@ -241,7 +255,7 @@ export function GetInTouch() {
                           </svg>
                         </div>
                         <p>
-                          {"Get Report".split("").map((ch, i) => (
+                          {"Submit".split("").map((ch, i) => (
                             <span key={i} style={{ "--i": i } as React.CSSProperties}>
                               {ch === " " ? "\u00A0" : ch}
                             </span>
